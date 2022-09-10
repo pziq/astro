@@ -1,0 +1,111 @@
+#swaggerUiTitleLink::after {
+    content: "ASTRO APIs";
+}
+#swagger-ui .topbar .wrapper img {
+  border-right: null;
+}
+.swagger-ui .topbar {
+  background-color: #1c1c1c;
+}
+.swagger-ui .topbar a {
+  font-size: 1em;
+}
+body {
+  background: #252528;
+}
+.swagger-ui .info .title {
+  color: #dddddd;
+}
+.swagger-ui .info p {
+  color: #dddddd;
+}
+
+.swagger-ui input[type="email"], .swagger-ui input[type="password"], .swagger-ui input[type="search"], .swagger-ui input[type="text"] {
+  background: #686868;
+}
+.swagger-ui .topbar .download-url-wrapper .download-url-button {
+  color: #dbdbdb;
+  background: #1c1c1c;
+}
+
+.swagger-ui .topbar .download-url-wrapper input[type="text"] {
+  border: 0px solid firebrick;
+}
+
+.swagger-ui .topbar .download-url-wrapper {
+
+  border: 2px solid firebrick;
+  border-radius: 5px;
+}
+
+.swagger-ui .opblock-tag {
+  color: white;
+}
+
+.swagger-ui .opblock-tag small {
+  color: white;
+}
+
+.swagger-ui .opblock.opblock-get {
+  border-color: black;
+  background: #b7b7b7;
+}
+
+.swagger-ui .opblock.opblock-post {
+  border-color: black;
+  background: #b7b7b7;
+}
+
+.swagger-ui .opblock.opblock-put {
+  border-color: black;
+  background: #b7b7b7;
+}
+
+.swagger-ui .opblock .opblock-section-header {
+  background: #1c1c1c;
+}
+
+.swagger-ui .opblock .opblock-summary-path, .swagger-ui .opblock .opblock-summary-path__deprecated {
+  color: initial;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: coral;
+}
+
+.swagger-ui .opblock .opblock-summary-method {
+  color: black;
+}
+
+.swagger-ui .opblock .opblock-section-header h4 {
+  color: aliceblue;
+}
+
+.swagger-ui .btn {
+  color: springgreen;
+}
+
+.swagger-ui input[type="email"], .swagger-ui input[type="password"], .swagger-ui input[type="search"], .swagger-ui input[type="text"] {
+  background: snow;
+}
+.swagger-ui input[type="email"], .swagger-ui input[type="password"], .swagger-ui input[type="search"], .swagger-ui input[type="text"] {
+
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.swagger-ui .model {
+  color: brown;
+}
+
+.swagger-ui .model-title {
+  color: snow;
+}
+
+.swagger-ui .topbar a {
+  flex: min-content;
+}
+
+.swagger-ui .topbar {
+  padding: 8px 15px;
+}
