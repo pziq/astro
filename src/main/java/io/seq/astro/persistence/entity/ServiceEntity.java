@@ -1,7 +1,7 @@
 package io.seq.astro.persistence.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import io.seq.astro.global.enumerations.Status;
+import io.seq.astro.utils.enums.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

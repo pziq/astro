@@ -1,4 +1,4 @@
-package io.seq.astro.global.enumerations;
+package io.seq.astro.utils.enums;
 
 public enum Status {
 
