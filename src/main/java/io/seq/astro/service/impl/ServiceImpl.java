@@ -1,24 +1,20 @@
 package io.seq.astro.service.impl;
 
+import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Page;
 import io.seq.astro.persistence.entity.ServiceEntity;
-import io.seq.astro.persistence.repository.ServiceRepo;
-import io.seq.astro.service.domain.Service;
+import io.seq.astro.domain.Service;
+import io.seq.astro.utils.mapper.ServiceMapper;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 public class ServiceImpl {
 
-    private final ServiceRepo serviceRepo;
-
-    public ServiceImpl(ServiceRepo serviceRepo) {
-        this.serviceRepo = serviceRepo;
-    }
-
-    public List<ServiceEntity> read(int pageIndex,int pageSize) {
-        return serviceRepo.findAll().page(Page.of(pageIndex,pageSize)).list();
+    public List<ServiceEntity> read(int pageIndex, int pageSize) {
+        return ServiceEntity.findAll().page(Page.of(pageIndex, pageSize)).list();
     }
 
 
@@ -27,13 +23,12 @@ public class ServiceImpl {
                 .map(serviceMapper::toDomain);
     }*/
 
-/*    @Transactional
-    public void save(@Valid Service service) {
+    public void save(Service service) {
         Log.debug("Saving service: " + service.toString());
-        ServiceEntity entity = serviceMapper.toEntity(service);
-        serviceRepo.persist(entity);
-        serviceMapper.updateDomainFromEntity(entity, service);
-    }*/
+        ServiceEntity entity = new ServiceMapper().domainToEntity(service, new ServiceEntity());
+        ServiceEntity.persist(entity);
+        Log.info("service persisted");
+    }
 
  /*   @Transactional
     public void update(@Valid Service service) {
@@ -47,7 +42,6 @@ public class ServiceImpl {
         serviceRepo.persist(entity);
         serviceMapper.updateDomainFromEntity(entity, service);
     }*/
-
 
 
 }

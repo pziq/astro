@@ -1,5 +1,5 @@
 #swaggerUiTitleLink::after {
-    content: "ASTRO APIs";
+    content: "ASTRO";
 }
 #swagger-ui .topbar .wrapper img {
   border-right: null;

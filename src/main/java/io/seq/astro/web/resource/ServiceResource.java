@@ -1,16 +1,24 @@
 package io.seq.astro.web.resource;
 
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
+import io.seq.astro.persistence.entity.ServiceEntity;
+import io.seq.astro.domain.Service;
 import io.seq.astro.service.impl.ServiceImpl;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import javax.ws.rs.*;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/service")
-@Tag(name = "Service mangement", description = "various service related operations")
-public class ServiceResource implements CURDResource{
+@Tag(name = "Service management", description = "various service related operations")
+public class ServiceResource implements CURDResource<Service> {
 
     private final ServiceImpl serviceImpl;
 
@@ -18,39 +26,30 @@ public class ServiceResource implements CURDResource{
         this.serviceImpl = serviceImpl;
     }
 
-    @Override
+    @Operation(summary = "fetch services", description = "Fetch service with pagination.")
     public Response read(String transactionId, String channel, String user, int pageIndex, int pageSize) {
-       //  return Response.ok(serviceImpl.read(pageIndex,pageSize)).build();
-        return Response.status(Response.Status.OK)
-                .entity(serviceImpl.read(pageIndex,pageSize))
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .header("pageCount",10)
-                .header("totalRecords",100)
-                .build();
+        PanacheQuery<ServiceEntity> serviceEntities = ServiceEntity.findAll();
+        return Response.status(Response.Status.OK).entity(serviceEntities.page(Page.of(pageIndex, pageSize)).list()).type(MediaType.APPLICATION_JSON_TYPE).header("pageCount", serviceEntities.pageCount()).header("totalRecords", serviceEntities.count()).build();
+    }
+
+    @POST
+    @Operation(summary = "save new service", description = "Creates new service with given details.")
+    @RequestBody(required = true, content = @Content(schema = @Schema(implementation = Service.class, required = true, requiredProperties = {"serviceId", "name"})))
+    public Response create(Service model, String transactionId, String channel, String user) {
+        serviceImpl.save(model);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @Override
-    public Response create(String transactionId, String channel, String user) {
-        return null;
-    }
-
-    @Override
-    public Response delete(String transactionId, String channel, String user) {
-        return null;
+    public Response delete(Long id, String transactionId, String channel, String user) {
+        ServiceEntity.deleteById(id);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @Override
     public Response update(String transactionId, String channel, String user) {
         return null;
     }
-
- /*   @GET
-    @Path("/{serviceId}")
-    public Response fetchByServiceId(@PathParam("serviceId") Long serviceId) {
-        return serviceImpl.findById(serviceId)
-                .map(customer -> Response.ok(customer).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
-    }*/
 
 
 //    @POST

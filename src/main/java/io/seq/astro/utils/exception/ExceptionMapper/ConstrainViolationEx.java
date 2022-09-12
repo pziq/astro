@@ -1,4 +1,4 @@
-package io.seq.astro.utils.exception;
+package io.seq.astro.utils.exception.ExceptionMapper;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -7,12 +7,10 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class CVExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
-
+public class ConstrainViolationEx implements ExceptionMapper<ConstraintViolationException> {
 
     @Override
     public Response toResponse(ConstraintViolationException e) {
-
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(prepareMessage(e))
                 .type("text/plain")
@@ -20,11 +18,10 @@ public class CVExceptionMapper implements ExceptionMapper<ConstraintViolationExc
     }
 
     private String prepareMessage(ConstraintViolationException exception) {
-        String msg = "";
+        StringBuilder message = new StringBuilder();
         for (ConstraintViolation<?> cv : exception.getConstraintViolations()) {
-
-            msg += cv.getMessage()+"\n";
+            message.append(cv.getMessage()).append("\n");
         }
-        return msg;
+        return message.toString();
     }
 }

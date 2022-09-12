@@ -1,10 +1,11 @@
 package io.seq.astro.persistence.entity;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.seq.astro.global.enumerations.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Table(name = "services",
@@ -13,17 +14,28 @@ import javax.validation.constraints.NotEmpty;
                 @Index(name = "idx_status" , columnList = "status")
         }
 )
-public class ServiceEntity {
+public class ServiceEntity extends PanacheEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @NotEmpty
     private String serviceId;
     private String name;
     private Status status;
     @Email
     private String email;
 
+    public ServiceEntity findByName(String name){
+        return find("name", name).firstResult();
+    }
+
+    public List<ServiceEntity> findAlive(){
+        return list("status", Status.Active);
+    }
+
+    public void deleteInactive(){
+        delete("name", "Stef");
+    }
+
+
+    // getters and setters
     public String getServiceId() {
         return serviceId;
     }

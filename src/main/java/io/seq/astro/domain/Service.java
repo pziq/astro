@@ -1,16 +1,15 @@
-package io.seq.astro.service.domain;
+package io.seq.astro.domain;
 
 import io.seq.astro.global.enumerations.Status;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-@Schema(name = "Service",description = "service details")
+@Schema(name = "Service", description = "service details")
 public class Service {
 
     private String serviceId;
     private String name;
     private Status status;
     private String email;
-
 
     /* getters and setters */
     public String getServiceId() {

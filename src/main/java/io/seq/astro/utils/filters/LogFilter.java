@@ -12,7 +12,10 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 @Provider
@@ -32,7 +35,6 @@ public class LogFilter implements ContainerRequestFilter, ContainerResponseFilte
         Log.info("Received " + reqContext.getMethod() + " request @ " + reqContext.getUriInfo().getRequestUri());
 
         reqContext.setProperty(ResourceConstants.START_TIME_KEY, System.currentTimeMillis());
-        // validations
 
         if (reqContext.getHeaders().get(ResourceConstants.TRANSACTION_ID_KEY) != null) {
             MDC.put(ResourceConstants.TRANSACTION_ID_KEY, reqContext.getHeaders().get(ResourceConstants.TRANSACTION_ID_KEY).toString().replaceAll("\\[", "").replaceAll("]", ""));
@@ -42,9 +44,14 @@ public class LogFilter implements ContainerRequestFilter, ContainerResponseFilte
             Log.info("Generated TransactionId : " + MDC.get(ResourceConstants.TRANSACTION_ID_KEY));
         }
 
+
+
         // body
         if (reqContext.hasEntity()) {
-            Log.info("Request body : " + IOUtils.toString(reqContext.getEntityStream()));
+            BufferedInputStream stream = new BufferedInputStream(reqContext.getEntityStream());
+            String payload = IOUtils.toString(stream, "UTF-8");
+            Log.info("Payload: " + payload);
+            reqContext.setEntityStream(IOUtils.toInputStream(payload, "UTF-8"));
         }
     }
 
