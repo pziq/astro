@@ -13,16 +13,13 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.UUID;
 
 @Provider
 public class LogFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
     private final ObjectMapper objectMapper;
-
 
     @Inject
     public LogFilter(ObjectMapper objectMapper) {
@@ -44,8 +41,6 @@ public class LogFilter implements ContainerRequestFilter, ContainerResponseFilte
             Log.info("Generated TransactionId : " + MDC.get(ResourceConstants.TRANSACTION_ID_KEY));
         }
 
-
-
         // body
         if (reqContext.hasEntity()) {
             BufferedInputStream stream = new BufferedInputStream(reqContext.getEntityStream());
@@ -58,11 +53,7 @@ public class LogFilter implements ContainerRequestFilter, ContainerResponseFilte
     @Override
     public void filter(ContainerRequestContext reqContext, ContainerResponseContext resContext) throws IOException {
         Log.info("Sending back response with status code : " + resContext.getStatus());
-        Log.info("Time taken to process transaction - "
-                + MDC.get(ResourceConstants.TRANSACTION_ID_KEY)
-                + " : "
-                + calcInterval((long) reqContext.getProperty(ResourceConstants.START_TIME_KEY))
-                + " ms");
+        Log.info("Time taken to process transaction - " + MDC.get(ResourceConstants.TRANSACTION_ID_KEY) + " : " + calcInterval((long) reqContext.getProperty(ResourceConstants.START_TIME_KEY)) + " ms");
         if (resContext.hasEntity()) {
             Log.info("Response body : " + objectMapper.writeValueAsString(resContext.getEntity()));
         }
@@ -71,5 +62,4 @@ public class LogFilter implements ContainerRequestFilter, ContainerResponseFilte
     private String calcInterval(Long startTime) {
         return String.valueOf(System.currentTimeMillis() - startTime);
     }
-
 }

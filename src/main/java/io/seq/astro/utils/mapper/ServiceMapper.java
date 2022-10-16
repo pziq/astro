@@ -3,7 +3,7 @@ package io.seq.astro.utils.mapper;
 import io.seq.astro.persistence.entity.ServiceEntity;
 import io.seq.astro.domain.Service;
 
-public class ServiceMapper implements BeanMapper<Service,ServiceEntity>{
+public class ServiceMapper implements BeanMapper<Service,ServiceEntity> {
 
     @Override
     public ServiceEntity domainToEntity(Service domain, ServiceEntity entity) {

@@ -8,9 +8,11 @@ import io.seq.astro.utils.mapper.ServiceMapper;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @ApplicationScoped
+@Transactional
 public class ServiceImpl {
 
     public List<ServiceEntity> read(int pageIndex, int pageSize) {
@@ -23,7 +25,8 @@ public class ServiceImpl {
                 .map(serviceMapper::toDomain);
     }*/
 
-    public void save(Service service) {
+
+    public void save(@Valid Service service) {
         Log.debug("Saving service: " + service.toString());
         ServiceEntity entity = new ServiceMapper().domainToEntity(service, new ServiceEntity());
         ServiceEntity.persist(entity);

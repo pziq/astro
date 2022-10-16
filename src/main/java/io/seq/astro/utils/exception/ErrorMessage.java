@@ -1,33 +1,40 @@
 package io.seq.astro.utils.exception;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class ErrorMessage {
 
-    private String message;
-    private Boolean status;
+    private String error;
+    private String errorDescription;
+    private String errorType;
 
-    public String getMessage() {
-        return message;
+    public String getError() {
+        return error;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setError(String error) {
+        this.error = error;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public String getErrorType() {
+        return errorType;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
     }
 
-    public ErrorMessage(String message, Boolean status) {
-        super();
-        this.message = message;
-        this.status = status;
+    public String getErrorDescription() {
+        return errorDescription;
     }
 
-    public ErrorMessage() {
-        super();
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public ErrorMessage(String error, String errorDescription, String errorType) {
+        this.error = error;
+        this.errorDescription = errorDescription;
+        this.errorType = errorType;
     }
 }

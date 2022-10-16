@@ -6,7 +6,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public interface CURDResource<T> {
 
     @GET
@@ -18,17 +19,17 @@ public interface CURDResource<T> {
             @QueryParam("size") @DefaultValue("20") int pageSize);
 
     @POST
-    @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
     public Response create (
-            T request,
+            @NotNull T request,
             @HeaderParam("transactionId") String transactionId,
             @NotNull @HeaderParam("channel") String channel,
             @NotNull @HeaderParam("user") String user);
 
     @DELETE
-    @Transactional
     @Path("/{id}")
+    @Transactional
     public Response delete (
             @PathParam("id") Long id,
             @HeaderParam("transactionId") String transactionId,
@@ -38,6 +39,7 @@ public interface CURDResource<T> {
     @PUT
     @Transactional
     public Response update (
+            T request,
             @HeaderParam("transactionId") String transactionId,
             @NotNull @HeaderParam("channel") String channel,
             @NotNull @HeaderParam("user") String user);

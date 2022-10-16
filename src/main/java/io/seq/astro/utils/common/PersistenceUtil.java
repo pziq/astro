@@ -9,11 +9,9 @@ import java.util.stream.Collectors;
 public class PersistenceUtil {
 
     public static String buildAndQuery(Map<String, Object> queryParams) {
-
         return queryParams.entrySet().stream()
                 .map(entry -> entry.getKey() + "=:" + entry.getKey())
                 .collect(Collectors.joining(" and "));
-
     }
 
     public static String buildSortQuery(List<String> sortParams) {

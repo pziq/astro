@@ -8,7 +8,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class CommonHTTPEx implements ExceptionMapper<CommonHTTPException> {
+public class CommonHttpEM implements ExceptionMapper<CommonHTTPException> {
 
 
     private final String USER_NOT_FOUND = "User not found";
@@ -17,13 +17,12 @@ public class CommonHTTPEx implements ExceptionMapper<CommonHTTPException> {
     public Response toResponse(CommonHTTPException e) {
 
         if (e.getMessage().equalsIgnoreCase(USER_NOT_FOUND)) {
-            return Response.status(Response.Status.NOT_FOUND).
-                    entity(new ErrorMessage(e.getMessage(), false))
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorMessage(e.getMessage(), "false","type"))
                     .build();
         } else {
-
             return Response.status(Response.Status.BAD_REQUEST).
-                    entity(new ErrorMessage(e.getMessage(), false))
+                    entity(new ErrorMessage(e.getMessage(), "false","type"))
                     .build();
         }
     }
